@@ -28,6 +28,7 @@
     "vite": "npm:rolldown-vite@7.1.12"
   },
   "dependencies": {
+    "mongodb": "^6.20.0",
     "react": "19.0.0-rc.1",
     "react-dom": "19.0.0-rc.1"
   }
