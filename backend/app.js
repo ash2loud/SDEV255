@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
+//gets all the things
 router.get("/things", async(req, res) =>{
     try{
         const things = await Thing.find({})
@@ -16,6 +17,23 @@ router.get("/things", async(req, res) =>{
     }
     catch (err){
         console.error(err);
+        res.status(500).send({ error: "Internal Server Error", details: err.message });
+    }
+})
+
+//find and get one specific thing
+router.get("/things/:id", async(req, res) =>{
+    try{
+        console.log('Requested ID:', req.params.id);
+        const thing = await Thing.findById(req.params.id);
+        console.log('Query result:', thing);
+        if (!thing) {
+            return res.status(404).send({ error: "Thing not found", id: req.params.id });
+        }
+        res.json(thing);
+    }
+    catch (err){
+        console.error('Error in /things/:id route:', err);
         res.status(500).send({ error: "Internal Server Error", details: err.message });
     }
 })
