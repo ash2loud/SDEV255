@@ -4,6 +4,6 @@ const Thing = db.model("Thing", {
     maker: String,
     amount: {type:Number, min:1, max:999},
     category: [String]
-})
+});
 
-module.export = Thing
+module.exports = Thing;
