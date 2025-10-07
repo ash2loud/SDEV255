@@ -5,7 +5,8 @@ addEventListener("DOMContentLoaded", async function(){
 
     let html="";
     for (let thing of things){
-        html += `<li>${thing.name} (${thing.maker})</li>`;
+        html += `<li>${thing.name} &nbsp; (${thing.maker}) -
+          <a href="thing.html?id=${thing._id}">Details</a><br></li>`;
     }
 
     document.querySelector("#addedThings").innerHTML = html;
