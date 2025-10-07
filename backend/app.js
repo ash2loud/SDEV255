@@ -38,6 +38,21 @@ router.get("/things/:id", async(req, res) =>{
     }
 })
 
+//update a thing
+router.put("/things/:id", async(req, res) =>{
+    try{
+        const thing = req.body;
+        await Thing.updateOne({_id:req.params.id}, thing);
+        console.log(thing);
+        res.sendStatus(204);
+    }
+    catch (err){
+        console.error(err);
+        res.status(400).send(err);
+    }
+});
+
+//add a thing
 router.post("/things", async(req, res) =>{
     try{
         const newThing = new Thing(req.body);   
