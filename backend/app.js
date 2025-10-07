@@ -18,7 +18,19 @@ router.get("/things", async(req, res) =>{
         console.error(err);
         res.status(500).send({ error: "Internal Server Error", details: err.message });
     }
+})
 
+router.post("/things", async(req, res) =>{
+    try{
+        const newThing = new Thing(req.body);   
+        await newThing.save();
+        console.log(newThing);
+        res.status(201).json(newThing);
+    }
+    catch (err){
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error", details: err.message });
+    }
 })
 
 app.use("/api" , router);
