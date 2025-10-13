@@ -3,7 +3,7 @@ addEventListener("DOMContentLoaded", async function() {
         const urlparam = new URLSearchParams(window.location.search);
         const thingID = urlparam.get("id");
         console.log("Thing ID:", thingID);
-        const response = await fetch("https://sdev255-j6mt.onrender.com" + thingID);
+        const response = await fetch("https://sdev255-j6mt.onrender.com/api/things/" + thingID);
 
         if (response.ok) {
             let thing = await response.json();

@@ -13,7 +13,7 @@ async function addThing(event) {
     };
 
     try {
-        const response = await fetch("https://sdev255-j6mt.onrender.com", {
+        const response = await fetch("https://sdev255-j6mt.onrender.com/api/things", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

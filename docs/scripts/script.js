@@ -1,5 +1,5 @@
 addEventListener("DOMContentLoaded", async function(){
-    const response = await fetch("https://sdev255-j6mt.onrender.com");
+    const response = await fetch("https://sdev255-j6mt.onrender.com/api/things");
     const things = await response.json();
     const list = document.getElementById("addedThings");
 
