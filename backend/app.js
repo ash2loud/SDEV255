@@ -4,7 +4,7 @@ const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
 const Thing = require("./models/things");
-app.use(cors());
+app.use(cors({ origin: 'https://ash2loud.github.io' }));
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -81,4 +81,4 @@ router.delete('/things/:id', async (request, response) => {
 });
 
 app.use("/api" , router);
-app.listen(2121);
+app.listen(2121);   
