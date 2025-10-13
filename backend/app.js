@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const Thing = require("./models/things");
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
+app.use(bodyParser.json());     
 
 //gets all the things
 router.get("/things", async(req, res) =>{
@@ -67,18 +67,16 @@ router.post("/things", async(req, res) =>{
 })
 
 //delete a thing
-router.delete('/things/:id', async (request, response) => {
+router.delete("/things/:id", async (req, res) => {
     try {
-        const thing = await Thing.findById(request.params.id); 
-        await thing.deleteOne();
-        console.log('Deleted thing with ID:', request.params.id);
-        response.sendStatus(204); 
-    } 
-    
-    catch (error) {
-        response.status(400).json({ error: 'Could not delete thing.' });
-    }
+        await Thing.deleteOne({ _id: req.params.id });
+        res.sendStatus(204);
+        console.log('Deleted thing with ID:', req.params.id);
+    } catch (err) {
+        console.error(err);
+        res.status(400).send({ error: "Delete failed", details: err.message });
+    }  
 });
 
 app.use("/api" , router);
-app.listen(2121);   
+app.listen(2121);
