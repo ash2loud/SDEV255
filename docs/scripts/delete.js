@@ -12,7 +12,7 @@ function getSelectedThingId() {
 
 async function deleteThing() {
     const thingId = getSelectedThingId();
-    const url = `/api/things/${thingId}`; 
+    const url = `https://sdev255-j6mt.onrender.com/api/things/${thingId}`; 
 
     const response = await fetch(url, {
         method: 'DELETE', 
