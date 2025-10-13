@@ -3,7 +3,7 @@ addEventListener("DOMContentLoaded", async function(){
     const thingID = urlparam.get("id");
     console.log("Thing ID:", thingID);
 
-    const response = await fetch(`http://localhost:2121/api/things/${thingID}`);
+    const response = await fetch(`mongodb+srv://ash_dbadmin_7467:44826173@sdev255.o7hky5o.mongodb.net/?retryWrites=true&w=majority&appName=SDEV255/${thingID}`);
     const thing = await response.json();
 
     let heading = "";

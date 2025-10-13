@@ -3,7 +3,7 @@ addEventListener("DOMContentLoaded", async function() {
         const urlparam = new URLSearchParams(window.location.search);
         const thingID = urlparam.get("id");
         console.log("Thing ID:", thingID);
-        const response = await fetch("http://localhost:2121/api/things/" + thingID);
+        const response = await fetch("mongodb+srv://ash_dbadmin_7467:44826173@sdev255.o7hky5o.mongodb.net/?retryWrites=true&w=majority&appName=SDEV255" + thingID);
 
         if (response.ok) {
             let thing = await response.json();
@@ -23,7 +23,7 @@ addEventListener("DOMContentLoaded", async function() {
         amount: document.getElementById('amount').value,
         category: document.getElementById('category').value
     }
-    const response = await fetch("http://localhost:2121/api/things/" + ThingID, {
+    const response = await fetch("mongodb+srv://ash_dbadmin_7467:44826173@sdev255.o7hky5o.mongodb.net/?retryWrites=true&w=majority&appName=SDEV255" + ThingID, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"

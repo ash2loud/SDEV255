@@ -13,7 +13,7 @@ async function addThing(event) {
     };
 
     try {
-        const response = await fetch("http://localhost:2121/api/things", {
+        const response = await fetch("mongodb+srv://ash_dbadmin_7467:44826173@sdev255.o7hky5o.mongodb.net/?retryWrites=true&w=majority&appName=SDEV255", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -66,5 +66,19 @@ router.post("/things", async(req, res) =>{
     }
 })
 
+//delete a thing
+router.delete('/things/:id', async (request, response) => {
+    try {
+        const thing = await Thing.findById(request.params.id); 
+        await thing.deleteOne();
+        console.log('Deleted thing with ID:', request.params.id);
+        response.sendStatus(204); 
+    } 
+    
+    catch (error) {
+        response.status(400).json({ error: 'Could not delete thing.' });
+    }
+});
+
 app.use("/api" , router);
 app.listen(2121);
