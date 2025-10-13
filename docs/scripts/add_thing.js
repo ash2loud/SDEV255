@@ -13,7 +13,7 @@ async function addThing(event) {
     };
 
     try {
-        const response = await fetch("mongodb+srv://ash_dbadmin_7467:44826173@sdev255.o7hky5o.mongodb.net/?retryWrites=true&w=majority&appName=SDEV255", {
+        const response = await fetch("https://sdev255-j6mt.onrender.com", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
