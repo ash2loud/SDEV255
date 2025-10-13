@@ -1,10 +1,10 @@
 const express = require("express");
-var cors = require('cors');
+const cors = require('cors');
 const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
 const Thing = require("./models/things");
-app.use(cors({ origin: 'https://ash2loud.github.io' }));
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
