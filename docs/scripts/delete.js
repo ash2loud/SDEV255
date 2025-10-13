@@ -26,3 +26,20 @@ async function deleteThing() {
         document.querySelector('#error').innerHTML = 'Cannot delete.';
     }
 }
+
+async function getAllThings() {
+    const response = await fetch('https://sdev255-j6mt.onrender.com/api/things');
+    if (response.ok) {
+        const things = await response.json();
+        const dropdown = document.querySelector('#thingDropDown');
+        dropdown.innerHTML = ''; // Clear previous options
+        things.forEach(thing => {
+            const option = document.createElement('option');
+            option.value = thing._id;
+            option.textContent = `${thing.name} (${thing.maker})`;
+            dropdown.appendChild(option);
+        });
+    } else {
+        document.querySelector('#error').innerHTML = 'Failed to load things.';
+    }
+}
