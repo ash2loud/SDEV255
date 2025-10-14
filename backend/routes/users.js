@@ -1,7 +1,7 @@
-const express = require('express');
+import express from('express');
 const router = express.Router();
-const User = require('../models/user');
-const jwt = require('jwt-simple');
+import User from('../models/user');
+import jwt from('jwt-simple');
 
 router.post('/auth', async (request, response) => {
 

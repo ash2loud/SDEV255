@@ -1,4 +1,4 @@
-const db = require("../db")
+import db from("../db")
 const Thing = db.model("Thing", {
     //hidden parameter _id will be created automatically
     name: {type:String, required:true},
