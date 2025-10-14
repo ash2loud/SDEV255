@@ -12,7 +12,8 @@ const usersRouter = usersModule.router;
 
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());     
+app.use(bodyParser.json());
+app.use(express.static('public'));  
 
 app.use('/api/auth', usersRouter);
 app.use('/api', router);
