@@ -3,13 +3,19 @@ const cors = require('cors');
 const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
+
 const Thing = require("./models/things");
+const usersModule = require('./routes/users');
+
+const checkAuth = usersModule.checkAuth; 
+const usersRouter = usersModule.router;
+
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());     
 
 //gets all the things
-router.get("/things", async(req, res) =>{
+router.get("/things", checkAuth, async(req, res) =>{
     try{
         const things = await Thing.find({})
         res.send(things)
@@ -22,7 +28,7 @@ router.get("/things", async(req, res) =>{
 })
 
 //find and get one specific thing
-router.get("/things/:id", async(req, res) =>{
+router.get("/things/:id", checkAuth, async(req, res) =>{
     try{
         console.log('Requested ID:', req.params.id);
         const thing = await Thing.findById(req.params.id);
@@ -39,7 +45,7 @@ router.get("/things/:id", async(req, res) =>{
 })
 
 //update a thing
-router.put("/things/:id", async(req, res) =>{
+router.put("/things/:id", checkAuth, async(req, res) =>{
     try{
         const thing = req.body;
         await Thing.updateOne({_id:req.params.id}, thing);
@@ -53,7 +59,7 @@ router.put("/things/:id", async(req, res) =>{
 });
 
 //add a thing
-router.post("/things", async(req, res) =>{
+router.post("/things", checkAuth, async(req, res) =>{
     try{
         const newThing = new Thing(req.body);   
         await newThing.save();
@@ -67,7 +73,7 @@ router.post("/things", async(req, res) =>{
 })
 
 //delete a thing
-router.delete("/things/:id", async (req, res) => {
+router.delete("/things/:id", checkAuth, async (req, res) => {
     try {
         await Thing.deleteOne({ _id: req.params.id });
         res.sendStatus(204);
@@ -78,5 +84,10 @@ router.delete("/things/:id", async (req, res) => {
     }  
 });
 
-app.use("/api" , router);
-app.listen(2121);
+app.use('/api/auth', usersRouter);
+app.use('/api', router);
+
+const PORT = process.env.PORT || 6767;
+app.listen(PORT, () => {
+     console.log(`Server running on port ${PORT}`);
+});

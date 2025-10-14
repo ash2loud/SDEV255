@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getSelectedThingId() {
-    // Finds the currently selected option in the dropdown and returns its 'value' attribute, 
-    // which holds the thing's unique MongoDB _id.
     const selectedId = document.querySelector('#thingDropDown option:checked').value; 
     return selectedId;
 }
@@ -13,33 +11,50 @@ function getSelectedThingId() {
 async function deleteThing() {
     const thingId = getSelectedThingId();
     const url = `https://sdev255-j6mt.onrender.com/api/things/${thingId}`; 
-
+    const token = localStorage.getItem('token');
+    
     const response = await fetch(url, {
-        method: 'DELETE', 
+        method: 'DELETE',
+        headers: {
+             'Authorization': `Bearer ${token}`
+        }
     });
 
     if (response.ok) {
         alert('Thing Deleted!');
-        // Refresh the dropdown list after deletion
+        // refreshes the dropdown list after deletion
         getAllThings(); 
-    } else {
+    } 
+    else if (response.status === 401) {
+         window.location.replace('/login.html');
+    }
+     else {
         document.querySelector('#error').innerHTML = 'Cannot delete.';
     }
 }
 
 async function getAllThings() {
-    const response = await fetch('https://sdev255-j6mt.onrender.com/api/things');
+const token = localStorage.getItem('token');
+    const response = await fetch('https://sdev255-j6mt.onrender.com/api/things', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
     if (response.ok) {
         const things = await response.json();
         const dropdown = document.querySelector('#thingDropDown');
-        dropdown.innerHTML = ''; // Clear previous options
+        dropdown.innerHTML = '';
         things.forEach(thing => {
             const option = document.createElement('option');
             option.value = thing._id;
             option.textContent = `${thing.name} (${thing.maker})`;
             dropdown.appendChild(option);
         });
-    } else {
+    } 
+    else if (response.status === 401) {
+        window.location.replace('/login.html');
+    } 
+    else {
         document.querySelector('#error').innerHTML = 'Failed to load things.';
     }
 }

@@ -3,18 +3,32 @@ addEventListener("DOMContentLoaded", async function(){
     const thingID = urlparam.get("id");
     console.log("Thing ID:", thingID);
 
-    const response = await fetch(`https://sdev255-j6mt.onrender.com/api/things/${thingID}`);
-    const thing = await response.json();
-
-    let heading = "";
-    heading+=`Details for ${thing.name}`;
-    document.querySelector("h1").innerText = heading;
+const token = localStorage.getItem('token'); 
     
-    let html = "";
-    html += `
-        <h2>Maker: ${thing.maker}</h2>
-        <p>Amount: ${thing.amount}</p>
-        <p>Category: ${thing.category}</p>
-    `;
-    document.querySelector("div").innerHTML = html;
+const response = await fetch(`https://sdev255-j6mt.onrender.com/api/things/${thingID}`, {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+    }
+});
+
+if (!response.ok) {
+    if (response.status === 401) {
+        window.location.replace('/login.html');
+    }
+    document.querySelector("div").innerHTML = "Error loading details.";
+    return;
+}
+const thing = await response.json();
+
+let heading = "";
+heading+=`Details for ${thing.name}`;
+document.querySelector("h1").innerText = heading;
+    
+let html = "";
+html += `
+    <h2>Maker: ${thing.maker}</h2>
+    <p>Amount: ${thing.amount}</p>
+    <p>Category: ${thing.category}</p>
+`;
+document.querySelector("div").innerHTML = html;
 });

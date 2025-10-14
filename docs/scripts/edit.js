@@ -1,9 +1,16 @@
 addEventListener("DOMContentLoaded", async function() {
     document.querySelector("#editThingButton").addEventListener("click", updateThing);
-        const urlparam = new URLSearchParams(window.location.search);
-        const thingID = urlparam.get("id");
-        console.log("Thing ID:", thingID);
-        const response = await fetch("https://sdev255-j6mt.onrender.com/api/things/" + thingID);
+
+    const urlparam = new URLSearchParams(window.location.search);
+    const thingID = urlparam.get("id");
+    console.log("Thing ID:", thingID);
+    const token = localStorage.getItem('token');
+
+    const response = await fetch("https://sdev255-j6mt.onrender.com/api/things/" + thingID, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 
         if (response.ok) {
             let thing = await response.json();
@@ -13,6 +20,9 @@ addEventListener("DOMContentLoaded", async function() {
             document.querySelector("#amount").value = thing.amount;
             document.querySelector("#category").value = thing.category;
         }
+        else if (response.status === 401) {
+         window.location.replace('/login.html');
+    }
     });
 
     async function updateThing(){
@@ -23,10 +33,15 @@ addEventListener("DOMContentLoaded", async function() {
         amount: document.getElementById('amount').value,
         category: document.getElementById('category').value
     }
-    const response = await fetch("mongodb+srv://ash_dbadmin_7467:44826173@sdev255.o7hky5o.mongodb.net/?retryWrites=true&w=majority&appName=SDEV255" + ThingID, {
+    
+    const token = localStorage.getItem('token');
+    const apiUrl = `https://sdev255-j6mt.onrender.com/api/things/${ThingID}`;
+
+    const response = await fetch(apiUrl, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(thing)
     });
@@ -35,7 +50,11 @@ addEventListener("DOMContentLoaded", async function() {
         alert("Thing updated successfully!");
         const updatedThing = await response.json();
         console.log("Thing updated successfully:", updatedThing);
-    } else {
+    }
+    else if (response.status === 401) {
+         window.location.replace('/login.html');
+    }
+    else {
         document.querySelector("#error").innerHTML = "Error updating thing.";
         console.error("Error updating thing:", response.statusText);
     }
