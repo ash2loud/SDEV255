@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const jwt = require('jwt-simple');
+const mockUser={username:"bigshot", password:"knockknock"}; //THIS IS FOR TESTING, TAKE THIS OUT LATER
 
 router.post('/auth', async (request, response) => {
 
@@ -9,6 +10,9 @@ const SECRET = 'fart';
     
     if (!request.body.username || !request.body.password) {
         return response.status(400).json({ error: 'Missing username or password' });
+    }
+    else if (uname === mockUser.username && password === mockUser.password) {
+        return response.json({ token: "fart", message: "Test user logged in." });
     }
 
     try {
