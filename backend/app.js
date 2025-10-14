@@ -1,6 +1,7 @@
-import express from ("express");
-import cors from('cors');
+const express = require("express");
+const cors = require('cors');
 const app = express();
+
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -11,10 +12,10 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "../docs")));
 
 const router = express.Router();
-import bodyParser from('body-parser');
+const bodyParser = require('body-parser');
 
-import Thing from("./models/things");
-import usersModule from('./routes/users');
+const Thing = require("./models/things");
+const usersModule = require('./routes/users');
 
 const checkAuth = usersModule.checkAuth; 
 const usersRouter = usersModule.router;
