@@ -1,9 +1,9 @@
-router.post('/auth', async (request, response) => {
-
 const express = require('express');
 const router = express.Router();
 const User = require('./models/User');
 const jwt = require('jwt-simple');
+
+router.post('/auth', async (request, response) => {
 
 const SECRET = 'fart'; 
     
