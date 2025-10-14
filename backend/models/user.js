@@ -1,6 +1,6 @@
-
-const Schema = mongoose.Schema;
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
 // const db = require("../db");
 // commented out because it doesn't seem to do anything
 
