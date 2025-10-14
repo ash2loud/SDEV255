@@ -14,6 +14,9 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());     
 
+app.use('/api/auth', usersRouter);
+app.use('/api', router);
+
 //gets all the things
 router.get("/things", checkAuth, async(req, res) =>{
     try{
@@ -84,10 +87,8 @@ router.delete("/things/:id", checkAuth, async (req, res) => {
     }  
 });
 
-app.use('/api/auth', usersRouter);
-app.use('/api', router);
 
-const PORT = process.env.PORT || 6767;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
      console.log(`Server running on port ${PORT}`);
 });
