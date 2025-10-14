@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 
-import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
