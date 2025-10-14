@@ -3,9 +3,9 @@ router.post('/auth', async (request, response) => {
 const express = require('express');
 const router = express.Router();
 const User = require('./models/User');
+const jwt = require('jwt-simple');
 
 const SECRET = 'fart'; 
-const jwt = require('jwt-simple');
     
     if (!request.body.username || !request.body.password) {
         return response.status(400).json({ error: 'Missing username or password' });
